@@ -1,0 +1,12 @@
+<h4>Dodaj hasła do krzyżówki:</h4>
+<form [formGroup]="form">
+  <input class="form-control" formControlName="word" id="word">
+</form>
+<button type="button" [disabled]="form.invalid" (click)="addWordToList()">Dodaj</button>
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let word of wordList">{{word}}
+    <button type="button" (click)="removeWordFromList(word)"></button>
+  </li>
+</ul>
+<i class="fa-solid fa-circle-xmark"></i>
+<!--<i class="fa-thin fa-circle-xmark"></i>-->
