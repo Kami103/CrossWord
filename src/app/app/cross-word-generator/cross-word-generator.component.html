@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-3">
+    <h4 class="m-3">Dodaj hasła do krzyżówki:</h4>
+    <form [formGroup]="form">
+      <input class="form-control w-75 m-3" formControlName="word" id="word">
+    </form>
+    <button type="button" class="btn btn-secondary m-3" [disabled]="form.invalid" (click)="addWordToList()">Dodaj
+    </button>
+    <ul class="list-group">
+      <li class="list-group-item mx-3 w-75" *ngFor="let word of wordList">
+        <div class="row">
+          <div class="col-9">{{word}}</div>
+          <div class="col-3">
+            <button (click)="removeWordFromList(word)" class="btn">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="col-9">
+    okok
+  </div>
+</div>

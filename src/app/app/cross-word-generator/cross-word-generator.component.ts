@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-word-list-editor',
-  templateUrl: './word-list-editor.component.html',
-  styleUrls: ['./word-list-editor.component.css'],
+  selector: 'app-cross-word-generator',
+  templateUrl: './cross-word-generator.component.html',
+  styleUrls: ['./cross-word-generator.component.css'],
 })
-export class WordListEditorComponent implements OnInit {
+export class CrossWordGeneratorComponent {
   form = new FormGroup({
     word: new FormControl<string>('', Validators.required),
   });
