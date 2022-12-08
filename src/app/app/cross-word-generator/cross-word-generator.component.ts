@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CrossWordF } from '../CrossWordF';
 
 @Component({
   selector: 'app-cross-word-generator',
@@ -11,17 +12,22 @@ export class CrossWordGeneratorComponent {
     word: new FormControl<string>('', Validators.required),
   });
 
-  wordList = new Set<string>();
+  _crossWordF: CrossWordF = new CrossWordF();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._crossWordF.addWord(' angular ');
+    this._crossWordF.deleteWord('aNgular ');
+    this._crossWordF.addWord(' JAva');
+  }
 
   addWordToList() {
     if (this.form.controls.word.value)
-      this.wordList.add(this.form.controls.word.value?.trim());
+      this._crossWordF.addWord(this.form.controls.word.value);
     this.form.controls.word.setValue('');
   }
 
-  removeWordFromList(word: string) {
-    this.wordList.delete(word);
+  removeWordFromList(word: String) {
+    // @ts-ignore
+    this._crossWordF.deleteWord(word);
   }
 }

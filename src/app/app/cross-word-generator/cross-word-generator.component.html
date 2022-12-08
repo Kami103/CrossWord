@@ -1,25 +1,31 @@
-<div class="row">
+<div class="row text-warning">
   <div class="col-3">
     <h4 class="m-3">Dodaj hasła do krzyżówki:</h4>
     <form [formGroup]="form">
-      <input class="form-control w-75 m-3" formControlName="word" id="word">
+      <input class="form-control w-75 m-3 text-warning border-warning" formControlName="word" id="word">
     </form>
-    <button type="button" class="btn btn-secondary m-3" [disabled]="form.invalid" (click)="addWordToList()">Dodaj
+    <button type="button" class="btn btn-warning m-3" [disabled]="form.invalid" (click)="addWordToList()">Dodaj
     </button>
     <ul class="list-group">
-      <li class="list-group-item mx-3 w-75" *ngFor="let word of wordList">
+      <li class="list-group-item mx-3 w-75 border-warning text-warning" style="line-height: 38px"
+          *ngFor="let wordList of _crossWordF.wordList">
         <div class="row">
-          <div class="col-9">{{word}}</div>
+          <div class="col-9 text-break">{{wordList.word}}</div>
           <div class="col-3">
-            <button (click)="removeWordFromList(word)" class="btn">
-              <i class="fa-solid fa-circle-xmark"></i>
+            <button (click)="removeWordFromList(wordList.word)" class="btn">
+              <i class="fa-solid fa-circle-xmark text-warning"></i>
             </button>
           </div>
         </div>
       </li>
     </ul>
   </div>
-  <div class="col-9">
-    okok
+  <div class="col-9 border-1 border-warning border-start m1 mt-4">
+    <div *ngFor="let word of _crossWordF.wordList">
+      <div style="width: 50px; height: 50px" class="d-inline-block btn"></div>
+      <div style="width: 50px; height: 50px; line-height: 50px; "
+           class="btn btn-warning d-inline-block border-1 border border-dark p-0 m-0"
+           *ngFor="let letter of word.word.split('')">{{letter}}</div>
+    </div>
   </div>
 </div>
