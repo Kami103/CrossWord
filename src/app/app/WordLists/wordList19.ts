@@ -1,0 +1,1 @@
+export class WordList19 {static L19: string[] = []}
