@@ -10,8 +10,13 @@
       <li class="list-group-item mx-3 w-75 border-warning text-warning" style="line-height: 38px"
           *ngFor="let wordList of _crossWordF.wordList">
         <div class="row">
-          <div class="col-9 text-break">{{wordList.word}}</div>
-          <div class="col-3">
+          <div  class="col-8 text-break">{{wordList.word}}</div>
+          <div class="col-2">
+            <button (click)="showQuestion(wordList.word)" class="btn">
+              <i class="fa-solid fa-file-pen text-warning"></i>
+            </button>
+          </div>
+          <div class="col-2">
             <button (click)="removeWordFromList(wordList.word)" class="btn">
               <i class="fa-solid fa-circle-xmark text-warning"></i>
             </button>
@@ -32,12 +37,27 @@
       </li>
     </ul>
   </div>
-  <div class="col-9 border-1 border-warning border-start m1 mt-4">
+  <div *ngIf="_crossWordF.answer!=''&&_crossWordF.answer!='ANSWER_NOT_FOUND'"
+       class="col-9 border-1 border-warning border-start m1 mt-4">
     <div *ngFor="let word of _crossWordF.wordList">
-      <div style="width: 50px; height: 50px" class="d-inline-block btn"></div>
+      <div *ngFor="let item of [].constructor(this.word.spaceNumber)" style="width: 50px; height: 50px"
+           class="d-inline-block btn"></div>
       <div style="width: 50px; height: 50px; line-height: 50px; "
            class="btn btn-warning d-inline-block border-1 border border-dark p-0 m-0"
-           *ngFor="let letter of word.word.split('')">{{letter}}</div>
+           *ngFor="let letter of word.word.split(''); let i= index">
+        <p *ngIf="i==word.indexOfLetter" class="text-danger" style="font-weight: 900;">{{letter}}</p>
+        <p *ngIf="i!=word.indexOfLetter">{{letter}}</p>
+      </div>
     </div>
   </div>
 </div>
+<div class="row w-100">
+<div class="col-4"></div>
+  <div class="col-4 text-center">
+    <form [formGroup]="formS">
+      <input class="form-control w-75 m-3 text-warning border-warning" formControlName="question" id="question">
+    </form>
+  </div>
+<div class="col-4"></div>
+</div>
+
