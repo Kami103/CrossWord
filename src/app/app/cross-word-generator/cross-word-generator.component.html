@@ -2,11 +2,12 @@
   <div class="col-3">
     <h4 class="m-3">Dodaj hasła do krzyżówki:</h4>
     <form [formGroup]="form">
-      <input class="form-control w-75 m-3 text-warning border-warning" formControlName="word" id="word">
-      <button type="button" class="btn btn-warning m-3" [disabled]="form.invalid" (click)="addWordToList()">Dodaj
+      <input class="form-control w-75 mt-3  ms-3 text-warning border-warning" formControlName="word" id="word">
+      <button type="button" class="btn btn-warning m-3 w-75" [disabled]="form.invalid" (click)="addWordToList()">
+        Dodaj
       </button>
     </form>
-    <ul class="list-group">
+    <ul class="list-group mt-3">
       <li class="list-group-item mx-3 w-75 border-warning text-warning" style="line-height: 38px"
           *ngFor="let wordList of _crossWordF.wordList">
         <div class="row">
@@ -44,18 +45,41 @@
       </div>
     </ul>
   </div>
-  <div *ngIf="_crossWordF.answer!=''&&_crossWordF.answer!='ANSWER_NOT_FOUND'"
-       class="col-9 border-1 border-warning border-start m1 mt-4">
-    <div *ngFor="let word of _crossWordF.wordList">
-      <div *ngFor="let item of [].constructor(this.word.spaceNumber)" style="width: 50px; height: 50px"
-           class="d-inline-block btn"></div>
-      <div style="width: 50px; height: 50px; line-height: 50px; "
-           class="btn btn-warning d-inline-block border-1 border border-dark p-0 m-0"
-           *ngFor="let letter of word.word.split(''); let i= index">
-        <p *ngIf="i==word.indexOfLetter" class="text-danger" style="font-weight: 900;">{{letter}}</p>
-        <p *ngIf="i!=word.indexOfLetter">{{letter}}</p>
+  <div class="col-6 border-1 border-warning border-start border-end m1 mt-4" [ngSwitch]="formT.controls.type.value">
+    <div class="w-100" *ngSwitchCase="'CrossWordF'">
+
+      <div *ngIf="_crossWordF.answer!=''&&_crossWordF.answer!='ANSWER_NOT_FOUND'"
+           class="w-100">
+        <div *ngFor="let word of _crossWordF.wordList">
+          <div *ngFor="let item of [].constructor(this.word.spaceNumber)" style="width: 50px; height: 50px"
+               class="d-inline-block btn"></div>
+          <div style="width: 50px; height: 50px; line-height: 50px; "
+               class="btn btn-warning d-inline-block border-1 border border-dark p-0 m-0"
+               *ngFor="let letter of word.word.split(''); let i= index">
+            <p *ngIf="i==word.indexOfLetter" class="text-danger" style="font-weight: 900;">{{letter}}</p>
+            <p *ngIf="i!=word.indexOfLetter">{{letter}}</p>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="w-100" *ngSwitchCase="'CrossWordS'">
+      <p class="tex-center">drugi typ: #TODO</p>
+    </div>
+  </div>
+  <div class="col-3 mt-4">
+    <form [formGroup]="formT">
+      <select formControlName="type" class="form-select w-75 border-warning text-warning"
+              aria-label="Default select example">
+        <option selected value="CrossWordF">Belkowa</option>
+        <option value="CrossWordS">Krzyżak</option>
+      </select>
+
+      <button type="button" class="btn btn-warning w-75 mt-3">Publikuj
+      </button>
+      <br>
+      <button type="button" class="btn btn-warning w-75 mt-3">Drukuj
+      </button>
+    </form>
   </div>
 </div>
 <div class="row w-100">

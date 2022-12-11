@@ -15,6 +15,9 @@ export class CrossWordGeneratorComponent {
   formS = new FormGroup({
     question: new FormControl<string>('', Validators.required),
   });
+  formT = new FormGroup({
+    type: new FormControl<string>('', Validators.required),
+  });
 
   _crossWordF: CrossWordF = new CrossWordF();
 
@@ -23,6 +26,7 @@ export class CrossWordGeneratorComponent {
     this._crossWordF.deleteWord('aNgular ');
     this._crossWordF.addWord(' JAva');
     this._crossWordF.wordList[0].questionState = 'NotFound';
+    this.formT.controls.type.setValue('CrossWordF');
   }
 
   addWordToList() {
