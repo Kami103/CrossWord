@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CrossWordF } from '../CrossWordF';
-import getDocumentElement from "@popperjs/core/lib/dom-utils/getDocumentElement";
 
 @Component({
   selector: 'app-cross-word-generator',
@@ -9,6 +8,7 @@ import getDocumentElement from "@popperjs/core/lib/dom-utils/getDocumentElement"
   styleUrls: ['./cross-word-generator.component.css'],
 })
 export class CrossWordGeneratorComponent {
+  displayedQuestion: number = -1;
   form = new FormGroup({
     word: new FormControl<string>('', Validators.required),
   });
@@ -22,6 +22,7 @@ export class CrossWordGeneratorComponent {
     this._crossWordF.addWord(' angular ');
     this._crossWordF.deleteWord('aNgular ');
     this._crossWordF.addWord(' JAva');
+    this._crossWordF.wordList[0].questionState = 'NotFound';
   }
 
   addWordToList() {
@@ -30,17 +31,35 @@ export class CrossWordGeneratorComponent {
     this.form.controls.word.setValue('');
   }
 
-  removeWordFromList(word: String) {
-    // @ts-ignore
+  removeWordFromList(word: string) {
+    for (let i = 0; i < this._crossWordF.wordList.length; i++) {
+      if (
+        this._crossWordF.wordList[i].word == word &&
+        i == this.displayedQuestion
+      ) {
+        this.displayedQuestion = -1;
+      }
+    }
     this._crossWordF.deleteWord(word);
   }
 
   showQuestion(word: string) {
-    for (const wordElement of this._crossWordF.wordList) {
-      if (word==wordElement.word){
-        console.log(word==wordElement.word)
-        this.formS.controls.question.setValue(wordElement.question);
+    for (let i = 0; i < this._crossWordF.wordList.length; i++) {
+      if (word == this._crossWordF.wordList[i].word) {
+        this.formS.controls.question.setValue(
+          this._crossWordF.wordList[i].question
+        );
+        this.displayedQuestion = i;
+        this._crossWordF.wordList[this.displayedQuestion].questionState =
+          'Revieved';
       }
+    }
+  }
+
+  updateQuestion() {
+    if (this.formS.controls.question.value != null) {
+      this._crossWordF.wordList[this.displayedQuestion].question =
+        this.formS.controls.question.value;
     }
   }
 }

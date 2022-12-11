@@ -9,7 +9,6 @@ import { WordList9 } from './WordLists/wordList9';
 import { WordList10 } from './WordLists/wordList10';
 
 export class CrossWordF {
-  
   private _answer: string;
 
   get answer(): string {

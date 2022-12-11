@@ -10,31 +10,38 @@
       <li class="list-group-item mx-3 w-75 border-warning text-warning" style="line-height: 38px"
           *ngFor="let wordList of _crossWordF.wordList">
         <div class="row">
-          <div  class="col-8 text-break">{{wordList.word}}</div>
+          <div class="col-8 text-break">{{wordList.word}}</div>
           <div class="col-2">
             <button (click)="showQuestion(wordList.word)" class="btn">
-              <i class="fa-solid fa-file-pen text-warning"></i>
+              <div [ngSwitch]="wordList.questionState">
+                <i class="fa-solid fa-file-pen text-danger" *ngSwitchCase="'NotFound'"></i>
+                <i class="fa-solid fa-file-pen text-warning" *ngSwitchCase="'Found'"></i>
+                <i class="fa-solid fa-file-pen text-success" *ngSwitchCase="'Revieved'"></i>
+                <i class="fa-solid fa-file-pen" *ngSwitchDefault></i>
+              </div>
             </button>
           </div>
           <div class="col-2">
             <button (click)="removeWordFromList(wordList.word)" class="btn">
-              <i class="fa-solid fa-circle-xmark text-warning"></i>
+              <i class="fa-solid fa-circle-xmark text-danger"></i>
             </button>
           </div>
         </div>
       </li>
-      <li class="list-group-item mx-3 mt-3 w-75 border-danger text-danger border-top text-center"
-          style="line-height: 38px"
-          *ngIf="_crossWordF.answer==''">Podano za mało haseł!
-      </li>
-      <li class="list-group-item mx-3 mt-3 w-75 border-danger text-danger border-top text-center"
-          style="line-height: 38px"
-          *ngIf="_crossWordF.answer=='ANSWER_NOT_FOUND'">Nie znaleziono hasła!
-      </li>
-      <li class="list-group-item mx-3 mt-3 w-75 border-success text-success border-top text-center"
-          style="line-height: 38px"
-          *ngIf="_crossWordF.answer!=''&&_crossWordF.answer!='ANSWER_NOT_FOUND'">{{_crossWordF.answer}}
-      </li>
+      <div [ngSwitch]="_crossWordF.answer">
+        <li class="list-group-item mx-3 mt-3 w-75 border-danger text-danger border-top text-center"
+            style="line-height: 38px"
+            *ngSwitchCase="''">Podano za mało haseł!
+        </li>
+        <li class="list-group-item mx-3 mt-3 w-75 border-danger text-danger border-top text-center"
+            style="line-height: 38px"
+            *ngSwitchCase="'ANSWER_NOT_FOUND'">Nie znaleziono hasła!
+        </li>
+        <li class="list-group-item mx-3 mt-3 w-75 border-success text-success border-top text-center"
+            style="line-height: 38px"
+            *ngSwitchDefault>{{_crossWordF.answer}}
+        </li>
+      </div>
     </ul>
   </div>
   <div *ngIf="_crossWordF.answer!=''&&_crossWordF.answer!='ANSWER_NOT_FOUND'"
@@ -52,12 +59,13 @@
   </div>
 </div>
 <div class="row w-100">
-<div class="col-4"></div>
+  <div class="col-4"></div>
   <div class="col-4 text-center">
-    <form [formGroup]="formS">
-      <input class="form-control w-75 m-3 text-warning border-warning" formControlName="question" id="question">
+    <form [formGroup]="formS" *ngIf="displayedQuestion != -1">
+      <input class="form-control w-75 m-3 text-warning border-warning" formControlName="question" id="question"
+             (keydown)="updateQuestion()">
     </form>
   </div>
-<div class="col-4"></div>
+  <div class="col-4"></div>
 </div>
 
