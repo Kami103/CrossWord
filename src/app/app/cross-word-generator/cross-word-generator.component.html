@@ -62,8 +62,12 @@
         </div>
       </div>
     </div>
-    <div class="w-100" *ngSwitchCase="'CrossWordS'">
+    <div class="w-100 m-0" *ngSwitchCase="'CrossWordS'">
       <p class="tex-center">drugi typ: #TODO</p>
+      <div *ngFor="let tab of _crossWordF._answerS;" class="w-100 m-0" style="height:30px">
+        <div *ngFor="let letter of tab" style="width: 30px; height: 30px;line-height: 30px"
+             class="border border-dark d-inline-block m-0">{{letter}}</div>
+      </div>
     </div>
   </div>
   <div class="col-3 mt-4">

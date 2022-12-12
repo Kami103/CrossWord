@@ -21,6 +21,8 @@ export class CrossWordGeneratorComponent {
 
   _crossWordF: CrossWordF = new CrossWordF();
 
+  // _crossWordS: CrossWordS = new CrossWordS();
+
   ngOnInit(): void {
     this._crossWordF.addWord(' angular ');
     this._crossWordF.deleteWord('aNgular ');

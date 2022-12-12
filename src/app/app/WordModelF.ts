@@ -1,4 +1,5 @@
 export class WordModelF {
+
   private _questionState: string = 'NotFound';
   private _word: string;
 

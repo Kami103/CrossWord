@@ -9,6 +9,7 @@ import { WordList9 } from './WordLists/wordList9';
 import { WordList10 } from './WordLists/wordList10';
 
 export class CrossWordF {
+  _answerS: string[][];
   private _answer: string;
 
   get answer(): string {
@@ -24,6 +25,13 @@ export class CrossWordF {
   constructor() {
     this._wordList = [];
     this._answer = '';
+    this._answerS = [];
+    for (var i: number = 0; i < 20; i++) {
+      this._answerS[i] = [];
+      for (var j: number = 0; j < 20; j++) {
+        this._answerS[i][j] = '';
+      }
+    }
   }
 
   addWord(word: string) {
@@ -31,7 +39,9 @@ export class CrossWordF {
       if (wordOfList.word == word.trim().toUpperCase()) return;
     }
     this._wordList.push(new WordModelF(word.trim().toUpperCase(), -1, -1));
-    this.findNewAnswer();
+    this.findNewAnswer(); //pierwsza kzyzowka
+    if (this._wordList.length == 1) this.addFirstWord();
+    else this.addNextWord();
   }
 
   deleteWord(word: string) {
@@ -371,4 +381,13 @@ export class CrossWordF {
       wordO.spaceNumber = 1 + num - wordO.indexOfLetter;
     }
   }
+
+  private addFirstWord() {
+    for (let i = 0; i < this._wordList[0].word.length; i++) {
+      // @ts-ignore
+      this._answerS[1][i + 1] = this._wordList[0].word.at(i);
+    }
+  }
+
+  private addNextWord() {}
 }
